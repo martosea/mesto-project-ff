@@ -15,8 +15,8 @@ function createCard(cardInit, deleteFunction) {
     return cardElement;
 }
 
-function deleteCard() {
-    this.closest('.card').remove();
+function deleteCard(evt) {
+    evt.target.closest('.card').remove();
 }
 
 function renderCard(item, method = "prepend") {
