@@ -1,4 +1,6 @@
 export { createCard };
+export { likeCard };
+export { deleteCard };
 
 const cardTemplate = document.querySelector('#card-template').content; 
 const elementForClone = cardTemplate.querySelector('.places__item');
@@ -28,6 +30,15 @@ function createCard({
     cardImage.addEventListener('click', () =>
         onCardClickFunction(cardInit.name, cardInit.link));
     return cardElement;
+}
+
+function likeCard (likeButton) {
+    likeButton.classList.toggle("card__like-button_is-active");
+}
+
+function deleteCard(delButton) {
+    const listItem = delButton.closest('.card');
+    listItem.remove()    
 }
 
 

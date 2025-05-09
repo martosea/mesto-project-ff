@@ -1,7 +1,7 @@
 import "../pages/index.css";
 import { initialCards } from "../components/cards";
-import { closePopup, openPopup, setModalWindowEventListeners } from "../components/modal";
-import { createCard } from "../components/card";
+import { closeModal, openModal, setModalWindowEventListeners } from "../components/modal";
+import { createCard, likeCard, deleteCard } from "../components/card";
 
 const formEditProfile = document.querySelector('[name="edit-profile"]')
 const nameInput = formEditProfile.querySelector('.popup__input_type_name');
@@ -22,11 +22,11 @@ initialCards.forEach(function (cardInit) {
 
 const addButton =  document.querySelector('.profile__add-button');
 const addPopup =   document.querySelector('.popup_type_new-card');
-addButton.addEventListener('click', () => openPopup(addPopup, null));
+addButton.addEventListener('click', () => openModal(addPopup, null));
 
 const editButton =  document.querySelector('.profile__edit-button');
 const editPopup =   document.querySelector('.popup_type_edit');
-editButton.addEventListener('click', () => openPopup(editPopup, beforeEditPopupOpened));
+editButton.addEventListener('click', () => openModal(editPopup, beforeEditPopupOpened));
 
 formNewPlace.addEventListener('submit', handleNewPlaceFormSubmit); 
 
@@ -44,7 +44,7 @@ function handleEditFormSubmit(evt) {
     evt.preventDefault();
     profileTitle.textContent = nameInput.value;
     profileDescription.textContent = jobInput.value; 
-    closePopup(editPopup);
+    closeModal(editPopup);
 }
 
 formEditProfile.addEventListener('submit', handleEditFormSubmit); 
@@ -54,20 +54,20 @@ function openCardPopup( title, link) {
     popupImage.alt = title;
     popupCaption.textContent = title;
 
-    openPopup(imagePopup, null);
+    openModal(imagePopup, null);
 }
 
 function handleNewPlaceFormSubmit(evt) {
     evt.preventDefault();
 
-    let newCard = {};
+    const newCard = {};
     newCard.name = cardNameInput.value;
     newCard.link =  urlInput.value
     renderCard(newCard);
 
     formNewPlace.reset();
 
-    closePopup(addPopup);
+    closeModal(addPopup);
 }
 
 function renderCard(item, method = "prepend") {
@@ -83,12 +83,5 @@ function renderCard(item, method = "prepend") {
     );
 }
 
-function likeCard (likeButton) {
-    likeButton.classList.toggle("card__like-button_is-active");
-}
 
-function deleteCard(delButton) {
-    const listItem = delButton.closest('.card');
-    listItem.remove()    
-}
 
