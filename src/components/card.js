@@ -1,6 +1,4 @@
-export { createCard };
-export { likeCard };
-export { deleteCard };
+export { createCard, likeCard, deleteCard };
 
 const cardTemplate = document.querySelector('#card-template').content; 
 const elementForClone = cardTemplate.querySelector('.places__item');
