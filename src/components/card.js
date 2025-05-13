@@ -1,12 +1,12 @@
-import { API_setLikeCard, secretConfig } from '../scripts/api.js';
+import { API_setLikeCard } from '../components/api.js';
 
-export { createCard };
+export { createCard, removeCard };
 
-const cardTemplate = document.querySelector('#card-template').content; 
+const cardTemplate = document.querySelector('#card-template').content;
 const elementForClone = cardTemplate.querySelector('.places__item');
 
 function likeCard({ likeButton, likeCountElement, cardId, isLiked }) {
-    API_setLikeCard(secretConfig, cardId, isLiked)
+    API_setLikeCard(cardId, isLiked)
         .then(updatedCard => {
             likeCountElement.textContent = updatedCard.likes.length;
             likeButton.classList.toggle("card__like-button_is-active");
@@ -18,10 +18,9 @@ function likeCard({ likeButton, likeCountElement, cardId, isLiked }) {
 
 function createCard({
     cardObject,
+    userId,
     deleteFunction,
-    onCardClickFunction,
-    canDelete,
-    isLiked
+    onCardClickFunction
 }) {
     const cardElement = elementForClone.cloneNode(true);
     cardElement.querySelector('.card__title').textContent = cardObject.name;
@@ -35,6 +34,10 @@ function createCard({
     const likeButton = cardElement.querySelector('.card__like-button');
 
     likeCountElement.textContent = cardObject.likes.length;
+
+    const isLiked = cardObject.likes.some(user => user._id === userId);
+    const canDelete = (cardObject.owner._id === userId);
+
     if (isLiked) {
         likeButton.classList.add("card__like-button_is-active");
     }
@@ -61,4 +64,9 @@ function createCard({
     );
 
     return cardElement;
+}
+
+
+function removeCard(cardElement) {
+    cardElement.remove();
 }
