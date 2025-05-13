@@ -51,15 +51,17 @@ function checkValid(formElement, inputElement, settings) {
     if (inputElement.validity.patternMismatch) {
         inputElement.setCustomValidity(inputElement.dataset.errorMessage);
     } else if (inputElement.validity.tooShort) {
-    inputElement.setCustomValidity(
-        `Минимальное количество символов: ${inputElement.minLength}. Длина текста сейчас: ${inputElement.value.length} символ${getSuffix(inputElement.value.length)}.`
-    );
+        inputElement.setCustomValidity(
+            `Минимальное количество символов: ${inputElement.minLength}. Длина текста сейчас: ${inputElement.value.length} символ${getSuffix(inputElement.value.length)}.`
+        );
     } else if (inputElement.validity.tooLong) {
-    inputElement.setCustomValidity(
-        `Максимальное количество символов: ${inputElement.maxLength}. Сейчас: ${inputElement.value.length} символ${getSuffix(inputElement.value.length)}.`
-    );
+        inputElement.setCustomValidity(
+            `Максимальное количество символов: ${inputElement.maxLength}. Сейчас: ${inputElement.value.length} символ${getSuffix(inputElement.value.length)}.`
+        );
     } else if (inputElement.validity.valueMissing) {
         inputElement.setCustomValidity("Вы пропустили это поле.");
+    } else if (inputElement.type === "url" && inputElement.validity.typeMismatch) {
+        inputElement.setCustomValidity("Введите адрес сайта.");
     } else {
         inputElement.setCustomValidity("");
     }
@@ -67,7 +69,7 @@ function checkValid(formElement, inputElement, settings) {
     if (!inputElement.validity.valid) {
         showInputError(formElement, inputElement, settings);
     } else {
-    hideInputError(formElement, inputElement, settings);
+        hideInputError(formElement, inputElement, settings);
     }
 }
 
